@@ -188,10 +188,10 @@ class Index //extends Backend
     {
         $redis = new \Redis();
         $redis->connect('127.0.0.1', 6379);
-        echo "Connection to server successfully";
-        //查看服务是否运行
-        echo "Server is running: " . $redis->ping();
-        $redis->set('ceshi', 123321);
-        echo $redis->get('ceshi');
+        for ($i = 1; $i <= 10; $i++) {
+            $user = array('user_id' => $i, 'username' => 'demo' . $i);
+            $redis->lPush('data', json_encode($user));
+        }
+        dump($redis->lRange('data', 0, -1));
     }
 }
