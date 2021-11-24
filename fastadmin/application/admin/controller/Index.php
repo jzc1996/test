@@ -189,9 +189,23 @@ class Index //extends Backend
         $redis = new \Redis();
         $redis->connect('127.0.0.1', 6379);
         for ($i = 1; $i <= 10; $i++) {
-            $user = array('user_id' => $i, 'username' => 'demo' . $i);
-            $redis->lPush('data', json_encode($user));
+            $redis->lPush('data', $i);
         }
-        dump($redis->lRange('data', 0, 1));
+    }
+
+    public function buy()
+    {
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1', 6379);
+        // 随机用户名，无意义，仅做标记
+        $username = '用户';
+
+        if ($goodsId = Redis::lpop('data')) {
+            // 购买成功
+            Redis::hset('buy_success', $goodsId, $username);
+        } else {
+            // 购买失败
+            Redis::incr('buy_fail');
+        }
     }
 }
