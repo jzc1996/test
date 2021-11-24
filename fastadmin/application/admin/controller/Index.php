@@ -200,12 +200,12 @@ class Index //extends Backend
         // 随机用户名，无意义，仅做标记
         $username = '用户';
 
-        if ($goodsId = $redis::lpop('data')) {
+        if ($goodsId = $redis->lpop('data')) {
             // 购买成功
-            $redis::hset('buy_success', $goodsId, $username);
+            $redis->hset('buy_success', $goodsId, $username);
         } else {
             // 购买失败
-            $redis::incr('buy_fail');
+            $redis->incr('buy_fail');
         }
     }
 }
