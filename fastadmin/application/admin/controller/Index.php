@@ -199,12 +199,15 @@ class Index //extends Backend
         $redis->connect('127.0.0.1', 6379);
         // 随机用户名，无意义，仅做标记
         $username = '用户';
-
-        if ($goodsId = $redis->lpop('data1')) {
+        $num = $goodsId = $redis->lpop('data1');
+        dump($num);
+        echo 'oo';
+        if ($num) {
             // 购买成功
-            $redis->hset('buy_success', $goodsId, $username);
+            $res =  $redis->hset('buy_success', $goodsId, $username);
+            dump($res);
         } else {
-            // 购买失败
+            // 购买失
             $redis->incr('buy_fail');
         }
     }
