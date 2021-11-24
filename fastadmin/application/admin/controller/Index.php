@@ -189,7 +189,7 @@ class Index //extends Backend
         $redis = new \Redis();
         $redis->connect('127.0.0.1', 6379);
         for ($i = 1; $i <= 10; $i++) {
-            $redis->lPush('data', $i);
+            $redis->lPush('data1', $i);
         }
     }
 
@@ -200,7 +200,7 @@ class Index //extends Backend
         // 随机用户名，无意义，仅做标记
         $username = '用户';
 
-        if ($goodsId = $redis->lpop('data')) {
+        if ($goodsId = $redis->lpop('data1')) {
             // 购买成功
             $redis->hset('buy_success', $goodsId, $username);
         } else {
