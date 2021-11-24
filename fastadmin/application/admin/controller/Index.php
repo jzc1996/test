@@ -192,6 +192,6 @@ class Index //extends Backend
             $user = array('user_id' => $i, 'username' => 'demo' . $i);
             $redis->lPush('data', json_encode($user));
         }
-        dump($redis->lRange('data', 0, -1));
+        dump($redis->lRange('data', 0, 1));
     }
 }
