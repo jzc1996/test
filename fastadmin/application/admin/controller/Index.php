@@ -225,7 +225,7 @@ class Index //extends Backend
     {
         $redis = new \Redis();
         $redis->connect('127.0.0.1', 6379);
-        echo $redis->get('ceshi1', 123456);
+        echo $redis->get('ceshi1');
         echo 'ooo';
         echo $redis->llen('ceshi2');
     }
