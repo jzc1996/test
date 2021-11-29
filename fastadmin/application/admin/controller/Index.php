@@ -8,6 +8,7 @@ use think\Config;
 use think\Hook;
 use think\Validate;
 use app\admin\controller\Im;
+use phpService\WordService;
 
 /**
  * 后台首页
@@ -210,5 +211,39 @@ class Index //extends Backend
             // 购买失
             $redis->incr('buy_fail');
         }
+    }
+    public function setRedis()
+    {
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1', 6379);
+        $redis->set('ceshi1', 123456);
+        for ($i = 1; $i <= 10; $i++) {
+            $redis->lPush('ceshi2', $i);
+        }
+    }
+    public function selectRedis()
+    {
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1', 6379);
+        echo $redis->get('ceshi1', 123456);
+        echo 'ooo';
+        echo $redis->llen('ceshi2');
+    }
+    public function delRedis()
+    {
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1', 6379);
+        $redis->command('del', ['ceshi1', 'ceshi2']);
+    }
+
+    public function word()
+    {
+
+        //实例化
+        $api = new WordService();
+        $data = [];
+        $data['file_name'] = 'word';
+        $data['content'] = "哈哈哈哈哈哈哈多久啊哈叫啊叫返回的路上看见飞客联盟v开发的佛的，另外ivi农家乐快递位妇女问你<img src = 'https://img1.baidu.com/it/u=1027017444,883548358&fm=26&fmt=auto'/>发多少略女方狐假虎威iu日起开放";
+        $api->index($data, 'http://ims.com/');
     }
 }
